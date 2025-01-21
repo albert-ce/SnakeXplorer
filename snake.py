@@ -30,7 +30,7 @@ class SnakeSquare:
 
 class Snake:
     def __init__(self, x=0, y=0):
-        self.body = [SnakeSquare(x, y)]
+        self.body = [SnakeSquare(y, x)]
         self.head = self.body[0]
         self._dir = self.head.dir
         self.length = 1
@@ -55,9 +55,9 @@ class Snake:
         self.length += 1
 
 class Game:
-    def __init__(self, width=20, height=20):
+    def __init__(self, width=20, height=10, fps=5):
+        self.fps = fps
         self.running = False
-        self.ended = False
         self.width = width
         self.height = height
         self.board = np.full((height, width), BOARD)
@@ -69,6 +69,16 @@ class Game:
         self.update_board()
 
         keyboard.on_press(self.get_input)
+
+    def get_input(self, key):
+        key_to_dir = {'w': UP, 'd': RIGHT, 's': DOWN, 'a': LEFT}
+
+        if key.name in key_to_dir:
+            dir = key_to_dir[key.name]
+            if not_equal(self.snake.dir, -dir):
+                self.snake.dir = dir
+        elif key.name == 'esc':
+            self.running = False
 
     def update_board(self):
         self.board[self.board != BOARD] = BOARD
@@ -87,21 +97,11 @@ class Game:
 
     def print_board(self):
         chars = np.full_like(self.board, '.', dtype='U8')
-        chars[self.board == APPLE] = 'o'
-        chars[self.board == SNAKE] = '#'
+        chars[self.board == APPLE] = '*'
+        chars[self.board == SNAKE] = '@'
         print("\033c")
         for row in chars:
             print(''.join(row))
-
-    def get_input(self, key):
-        if not_equal(self.snake.dir, DOWN) and key.name == 'w':
-            self.snake.dir = UP
-        if not_equal(self.snake.dir, LEFT) and key.name == 'd':
-            self.snake.dir = RIGHT
-        if not_equal(self.snake.dir, UP) and key.name == 's':
-            self.snake.dir = DOWN
-        if not_equal(self.snake.dir, RIGHT) and key.name == 'a':
-            self.snake.dir = LEFT
 
     def check_collisions(self):
         y, x = self.snake.head.pos
@@ -123,13 +123,9 @@ class Game:
                 self.check_eating()
                 self.update_board()
 
-if __name__ == '__main__':
-    g = Game(20, 20)
-
-    input("Press the Enter key to continue: ")
-    g.running = True
-
-    while not g.ended:
-        time.sleep(0.3)
-        g.update()
-        g.print_board()
+    def play(self):
+        self.running = True
+        while self.running:
+            time.sleep(1/self.fps)
+            self.update()
+            self.print_board()
