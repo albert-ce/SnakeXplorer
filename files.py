@@ -62,7 +62,7 @@ SNAKE_ART ="""          -.._        .--.______      ____
 """
 
 INSTRUCTIONS = """1. Go to the *game* folder
-2. You will see an image grid
+2. Adjust the window width to: {width} images
 3. Press Enter to Start
 [Press Esc to quit at any time]
 """

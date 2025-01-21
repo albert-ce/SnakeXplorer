@@ -6,7 +6,7 @@ if __name__ == '__main__':
     tprint("SnakeXplorer", font='small')
     print(SNAKE_ART)
     print('-'*60+'\n')
-    print(INSTRUCTIONS)
+    print(INSTRUCTIONS.format(width=game.width))
 
     keyboard.wait('enter')
     game.play()
