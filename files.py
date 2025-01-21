@@ -3,7 +3,7 @@ from PIL import Image
 import os
 
 class FileExplorerGame(Game):
-    def __init__(self, width=10, height=8, fps=2, file_size=(50,50)):
+    def __init__(self, width=10, height=8, fps=3, file_size=(50,50)):
         super().__init__(width, height, fps)
         self.SNAKE_IMG = Image.new("RGB", file_size, (29, 182, 83))
         self.BOARD_IMG = Image.new("RGB", file_size, (255, 255, 255))
@@ -54,3 +54,15 @@ class FileExplorerGame(Game):
             self.save_board()
             keyboard.press('f5')
         self.delete_all()
+
+SNAKE_ART ="""          -.._        .--.______      ____
+            '.'.      |  _______|_,.-`_ o `;__,
+              '.`-...-' /        /.-'` '---'  '
+                `-...-|/________/
+"""
+
+INSTRUCTIONS = """1. Go to the *game* folder
+2. You will see an image grid
+3. Press Enter to Start
+[Press Esc to quit at any time]
+"""

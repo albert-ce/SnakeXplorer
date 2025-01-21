@@ -62,10 +62,10 @@ class Game:
         self.height = height
         self.board = np.full((height, width), BOARD)
 
+        self.snake = Snake(height//2, width//2)
         self.apple = None
         self.new_apple()
 
-        self.snake = Snake(height//2, width//2)
         self.update_board()
 
         keyboard.on_press(self.get_input)
@@ -90,7 +90,7 @@ class Game:
 
     def new_apple(self):
         y, x = random.randint(0, self.height-1), random.randint(0, self.width-1)
-        while self.board[y,x] == SNAKE:
+        while any(np.all(np.array([y, x]) == square.pos) for square in self.snake.body):
             y, x = random.randint(0, self.height-1), random.randint(0, self.width-1)
 
         self.apple = np.array([y, x])
@@ -111,7 +111,7 @@ class Game:
             self.ended = True
 
     def check_eating(self):
-        if self.board[tuple(self.snake.head.pos)] == APPLE:
+        if np.all(self.snake.head.pos == self.apple):
             self.snake.grow()
             self.new_apple()
 
