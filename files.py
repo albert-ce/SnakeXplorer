@@ -61,8 +61,10 @@ SNAKE_ART ="""          -.._        .--.______      ____
                 `-...-|/________/
 """
 
-INSTRUCTIONS = """1. Go to the *game* folder
-2. Adjust the window width to: {width} images
-3. Press Enter to Start
+INSTRUCTIONS = """1. Open File Explorer
+2. Navigate to the *game* folder
+3. Adjust the window width to: {width} images
+4. Press Enter to start
+5. Use WASD to move
 [Press Esc to quit at any time]
 """
